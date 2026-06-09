@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ching Xin Tennis Association · 清心網球協會</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/chapters.css">
+<link rel="stylesheet" href="css/mobile.css">
+<script>
+// Wrap ResizeObserver so its callback runs on the next animation frame.
+// This prevents the benign-but-noisy "ResizeObserver loop completed with
+// undelivered notifications" console error. Must run before any other
+// script (image-slot, tweaks) creates an observer.
+(function(){
+  if (typeof window.ResizeObserver !== 'function') return;
+  var Native = window.ResizeObserver;
+  window.ResizeObserver = function(cb){
+    var scheduled = false, lastEntries = null, lastObs = null;
+    var wrapped = function(entries, obs){
+      lastEntries = entries; lastObs = obs;
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(function(){
+        scheduled = false;
+        try { cb(lastEntries, lastObs); } catch (e) {}
+      });
+    };
+    return new Native(wrapped);
+  };
+  window.ResizeObserver.prototype = Native.prototype;
+})();
+</script>
+</head>
+<body>
+
+<!-- ============ FIXED CHROME ============ -->
+<header class="topbar" id="topbar" data-theme="dark">
+  <a class="brandlock" href="#top" aria-label="Ching Xin Tennis Association">
+    <span class="knot">
+      <img class="k-light" src="brand/knot-bone.png" alt="">
+      <img class="k-dark" src="brand/knot-clay.png" alt="">
+    </span>
+    <span class="wm">
+      <span class="en">CHING XIN</span>
+      <span class="assoc">Tennis Association</span>
+    </span>
+  </a>
+  <nav class="navlinks">
+    <a href="#ch-courts">Courts</a>
+    <a href="#ch-about">About</a>
+    <a href="#ch-learning">Learning</a>
+    <a href="#ch-stringing">Stringing</a>
+    <a href="#ch-community">Community</a>
+    <a href="#ch-membership">Membership</a>
+    <a href="#ch-contact" class="nav-join">Contact</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span class="nt-bars"><i></i><i></i></span></button>
+</header>
+
+<!-- ============ MOBILE MENU DRAWER ============ -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <nav class="mobile-menu__nav">
+    <a href="#ch-courts"><span class="mm-en">Courts</span><span class="mm-cn">球場</span></a>
+    <a href="#ch-about"><span class="mm-en">About</span><span class="mm-cn">關於</span></a>
+    <a href="#ch-learning"><span class="mm-en">Learning</span><span class="mm-cn">練習</span></a>
+    <a href="#ch-stringing"><span class="mm-en">Stringing</span><span class="mm-cn">穿線</span></a>
+    <a href="#ch-community"><span class="mm-en">Community</span><span class="mm-cn">社群</span></a>
+    <a href="#ch-membership"><span class="mm-en">Membership</span><span class="mm-cn">入會</span></a>
+    <a href="#ch-contact"><span class="mm-en">Contact</span><span class="mm-cn">聯絡</span></a>
+  </nav>
+  <div class="mobile-menu__foot">清 心 網 球 協 會 · Kaohsiung</div>
+</div>
+
+<div class="counter" id="counter" data-theme="dark">
+  <span class="cur" id="cCur">01</span>
+  <span class="line" id="cLine"></span>
+  <span class="tot" id="cTot">08</span>
+</div>
+
+<a class="scrollcue-fixed" id="scrollcue" data-theme="dark" href="#ch-about">Scroll <span class="arrow"></span></a>
+
+<!-- ============ 01 · PHILOSOPHY (CLAY) ============ -->
+<section class="chapter ch-clay ch-photo" id="top" data-nav="dark" data-chapter="1">
+  <div class="chapter__media">
+    <image-slot id="cx-c1" src="photos/01-hero-philosophy.jpg" shape="rect" fit="cover" placeholder="Hero — full-bleed red clay court at golden hour"></image-slot>
+  </div>
+  <div class="chapter__scrim"></div>
+  <div class="chapter__inner">
+    <div class="wrap ch-anim">
+      <div class="ch-eyebrow">01
+PHILOSOPHY · 清心哲學</div>
+      <h1 class="ch-title" style="margin: 10px 0px 0px; border-width: 0px; border-style: solid">On clay,<br><span class="it" style="font-size: 80px">you cannot rush.</span></h1>
+      <p class="ch-cn">在 紅 土 上 ，有 些 美 好 ，需 要 時 間 。</p>
+      <p class="ch-sub">More than tennis. A way of being,<br>between the rallies.</p>
+      <a class="ch-cta" href="#ch-about">Our story <span class="ar">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · OUR COURTS (full-bleed BLUE hero — the second great scene) ============ -->
+<section class="chapter ch-blue ch-photo ch-bottom courtfull" id="ch-courts" data-nav="dark" data-chapter="2">
+  <div class="chapter__media">
+    <image-slot id="cx-courts-blue" src="photos/02-courts-blue.jpg" shape="rect" fit="cover" placeholder="Full-bleed blue hard court — golden hour, long shadow"></image-slot>
+  </div>
+  <div class="chapter__scrim"></div>
+  <div class="chapter__inner">
+    <div class="wrap ch-anim">
+      <div class="ch-eyebrow" style="margin: 0px 0px 50px"><span class="idx">02</span><span class="ln"></span> Our Courts · 球場</div>
+      <h2 class="ch-title" style="font-weight: 300; font-size: 75px; line-height: 1; margin: 0px 0px 100px">Every court.<br><span class="it" style="font-size: 80px">Every rhythm.</span></h2>
+      <p class="ch-cn">四 面 球 場 · 兩 紅 土 · 兩 硬 地</p>
+      <p class="ch-sub" style="max-width:40ch;">Two red clay.  Two blue hard.   
+Different surfaces. Same rhythm.
+
+</p>
+      <div class="courtfacts">
+        <div class="cf"><span class="k" style="color:#faf8f8">Red Clay</span><span class="v" style="font-size: 20px">2 courts</span></div>
+        <div class="cf"><span class="k" style="color:#faf8f8">Blue Hard</span><span class="v" style="font-size: 20px">2 courts</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · ABOUT CHING XIN (GREEN) ============ -->
+<section class="chapter ch-green ch-photo" id="ch-about" data-nav="dark" data-chapter="3">
+  <div class="chapter__media">
+    <image-slot id="cx-c3" src="photos/03-about-gathering.jpg" shape="rect" fit="cover" placeholder="Friends gathering courtside at sunset"></image-slot>
+  </div>
+  <div class="chapter__scrim"></div>
+  <div class="chapter__inner">
+    <div class="wrap ch-anim">
+      <div class="ch-eyebrow"><span class="idx">03</span><span class="ln"></span> About Ching Xin · 關於清心</div>
+      <h2 class="ch-title" style="font-size:clamp(38px,5.6vw,84px);">A gathering,<br><span class="it">not a club.</span></h2>
+      <p class="ch-sub" style="max-width:42ch;">A place kept by the people who love it.
+
+
+</p>
+      <p class="ch-cn" style="max-width: 48ch; text-align: left; padding: 0px">清 心 ， 不 是 一 間 商 業 俱 樂 部 。 而 是 一 群 喜 歡 網 球 的 人    
+一 起 維 護 、 一 同 成 長 的 場 域 。
+
+</p>
+      <div class="pillars-over">
+        <div class="po"><div class="i">I</div><div class="en">Clay</div><div class="cn">紅 土</div><div class="d">Time, patience, craft.</div></div>
+        <div class="po"><div class="i">II</div><div class="en">Rhythm</div><div class="cn">節 奏</div><div class="d">The breath between rallies.</div></div>
+        <div class="po"><div class="i">III</div><div class="en">Community</div><div class="cn">聚 會</div><div class="d">Tennis as the quiet excuse.</div></div>
+        <div class="po"><div class="i">IV</div><div class="en">Quiet</div><div class="cn">靜 謐</div><div class="d">A calm that does not shout.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · LEARNING (練習與成長) ============ -->
+<section class="chapter ch-clay ch-photo" id="ch-learning" data-nav="dark" data-chapter="4">
+  <div class="chapter__media">
+    <image-slot id="cx-learning" src="photos/05-learning.jpg" shape="rect" fit="cover" placeholder="Members practising together at golden hour"></image-slot>
+  </div>
+  <div class="chapter__scrim"></div>
+  <div class="chapter__inner">
+    <div class="wrap ch-anim">
+      <div class="ch-eyebrow"><span class="idx">04</span><span class="ln"></span> Learning · 練習與成長</div>
+      <h2 class="ch-title" style="font-size:clamp(38px,5.6vw,84px);">A place to<br><span class="it">get better.</span></h2>
+      <p class="ch-sub" style="max-width:42ch;">Play together. Learn from one another.  
+Get better, one rally at a time.
+
+</p>
+      <p class="ch-cn" style="max-width:48ch;">清 心 是 個 一 起 打 球     
+一 起 進 步 的 場 域。
+
+</p>
+      <div class="pillars-over">
+        <div class="po"><div class="i">01</div><div class="en">Practice</div><div class="cn">練 球</div><div class="d">Court time to hit and play.</div></div>
+        <div class="po"><div class="i">02</div><div class="en">Sharing</div><div class="cn">互 相 交 流</div><div class="d">Those with experience pass it on.</div></div>
+        <div class="po"><div class="i">03</div><div class="en">Doubles</div><div class="cn">雙 打 默 契</div><div class="d">Partners, position, timing.</div></div>
+        <div class="po"><div class="i">04</div><div class="en">Together</div><div class="cn">一 同 成 長</div><div class="d">Members hitting with members.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 · STRINGING CRAFT (穿線) ============ -->
+<section class="chapter ch-gold ch-photo" id="ch-stringing" data-nav="dark" data-chapter="5">
+  <div class="chapter__media">
+    <image-slot id="cx-stringing" src="photos/06-stringing.jpg" shape="rect" fit="cover" placeholder="Hands at a stringing machine — close, warm light"></image-slot>
+  </div>
+  <div class="chapter__scrim"></div>
+  <div class="chapter__inner">
+    <div class="wrap ch-anim">
+      <div class="ch-eyebrow"><span class="idx">05</span><span class="ln"></span> Stringing Craft · 穿 線</div>
+      <h2 class="ch-title" style="font-size:clamp(38px,5.6vw,84px);">Tension
+by your own hand</h2>
+      <p class="ch-sub" style="max-width:42ch;">Learn to string. Understand your racket.  
+Look after it yourself.
+
+</p>
+      <p class="ch-cn" style="max-width: 48ch; font-family: &quot;Noto Serif TC&quot;">在 清 心       
+你 可 以 學 會 自 己 調 整 球 拍。
+
+</p>
+      <div class="pillars-over" style="margin: 1px 0px 0px">
+        <div class="po"><div class="i">01</div><div class="en">String it yourself</div><div class="cn">學 習 穿 線</div><div class="d">Learn the craft by doing it.</div></div>
+        <div class="po"><div class="i">02</div><div class="en">String &amp; tension</div><div class="cn">線 材 與 磅 數</div><div class="d">Know what suits your game.</div></div>
+        <div class="po"><div class="i">03</div><div class="en">Racket care</div><div class="cn">球 拍 保 養</div><div class="d">Small habits, longer life.</div></div>
+        <div class="po"><div class="i">04</div><div class="en">Know your racket</div><div class="cn">了 解 你 的 球 拍</div><div class="d">Independence, not a service.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 · COMMUNITY — HERO ============ -->
+<section class="chapter ch-green ch-photo ch-bottom courtfull" id="ch-community" data-nav="dark" data-chapter="6">
+  <div class="chapter__media">
+    <image-slot id="cx-comm-hero" src="photos/07-community-3.jpg" shape="rect" fit="cover" placeholder="Evening courts — friends courtside"></image-slot>
+  </div>
+  <div class="chapter__scrim"></div>
+  <div class="chapter__inner">
+    <div class="wrap ch-anim" style="padding: 0px 58px 100px">
+      <div class="ch-eyebrow" style="margin: 0px 0px 5px"><span class="idx">06</span><span class="ln"></span> Community · 社群</div>
+      <h2 class="ch-title" style="font-size: 80px; margin: 0px 0px 2px">More than<br><span class="it">tennis.</span></h2>
+      <p class="ch-sub" style="max-width:34ch;">Friends on and off the court.</p>
+      <p class="ch-cn">球 場 內 外 ， 都 是 朋 友 。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 · MEMBERSHIP (BONE, simplified) ============ -->
+<section class="membership-photo" id="ch-membership" data-nav="dark" data-chapter="7">
+  <div class="chapter__media">
+    <image-slot id="cx-mem-bg" src="photos/08-membership.jpg" shape="rect" fit="cover" placeholder="Red clay court — calm, golden hour"></image-slot>
+  </div>
+  <div class="mem-scrim"></div>
+  <div class="wrap ch-anim">
+    <div class="mem-head">
+      <div>
+        <div class="ch-eyebrow"><span class="idx">07</span><span class="ln"></span> Membership · 入會</div>
+        <h2>Find your <span class="it">place</span>.</h2>
+        <div class="mh-cn">找 到 你 的 位 置 。</div>
+      </div>
+      <div class="mh-side">
+</div>
+    </div>
+    <div class="mem-cards">
+      <div class="mem-card">
+        <div class="mc-cn">訪客體驗</div>
+        <div class="mc-en">Visit</div>
+        <div class="mc-price"><span class="mc-num">採預約制</span><span class="mc-per">By appointment</span></div>
+        <ul>
+          <li><span class="li-cn">可體驗紅土或硬地</span><span class="li-en">Clay or hard court</span></li>
+          <li><span class="li-cn">由會員邀請參加</span><span class="li-en">Invited by a member</span></li>
+          <li><span class="li-cn">認識清心的開始</span><span class="li-en">A first visit to Ching Xin</span></li>
+        </ul>
+        <div class="mc-btn">來訪 · Say hello</div>
+      </div>
+      <div class="mem-card feature">
+        <div class="mc-cn">年費會員</div>
+        <div class="mc-en">Year-round</div>
+        <div class="mc-price"><span class="mc-num">NT$ 3,600</span><span class="mc-per">每年 · Per year</span></div>
+        <ul>
+          <li><span class="li-cn">四面球場皆可使用</span><span class="li-en">Access all four courts</span></li>
+          <li><span class="li-cn">享有會員福利</span><span class="li-en">Member benefits</span></li>
+          <li><span class="li-cn">參與會內年終賽</span><span class="li-en">Annual club tournament</span></li>
+          <li><span class="li-cn">可邀請朋友同行</span><span class="li-en">Bring friends along</span></li>
+        </ul>
+        <div class="mc-btn">加入 · Join us</div>
+      </div>
+      <div class="mem-card" style="border-width: 1px; margin: 0px">
+        <div class="mc-cn">月費會員</div>
+        <div class="mc-en">Month to month</div>
+        <div class="mc-price"><span class="mc-num">NT$ 400</span><span class="mc-per">每月 · Per month</span></div>
+        <ul>
+          <li><span class="li-cn">硬地球場使用</span><span class="li-en">Hard courts access</span></li>
+          <li><span class="li-cn">標準時段使用規範</span><span class="li-en">Standard court hours</span></li>
+          <li><span class="li-cn">無長期綁約</span><span class="li-en">No long commitment</span></li>
+          <li><span class="li-cn">生活忙碌可暫停</span><span class="li-en">Pause whenever life does</span></li>
+        </ul>
+        <div class="mc-btn">詢問 · Enquire</div>
+      </div>
+    </div>
+    <p class="mem-note-dark" style="margin: 15px 0px 1px">實 際 制 度 依 清 心 網 球 公 告 為 準 · Membership details follow Ching Xin's official announcements.</p>
+  </div>
+</section>
+
+<!-- ============ 09 · CONTACT + FOOTER (INK) ============ -->
+<section class="section contact" id="ch-contact" data-nav="dark" data-chapter="8">
+  <div class="wrap">
+    <div class="contact__grid">
+      <div class="reveal" style="margin: 0px 0px 10px">
+        <div class="ch-eyebrow" style="margin-bottom:24px;"><span class="idx">08</span><span class="ln"></span> Contact · 聯絡</div>
+        <h2 style="margin-top:0;">Come and <em>play</em>.</h2>
+        <div class="contact__cn">來 打 球 。</div>
+        <p class="contact__lead">官方聯絡方式整理中。 
+歡迎先到球場走走，在現場與我們約球。 
+
+</p>
+      </div>
+      <div class="contact__details reveal">
+        <div class="cdetail" style="padding: 8px 0px 0px"><div class="k">球場位置 · Location</div><div class="v">高雄市橋頭區仕隆路64之1號</div><div class="sub">仕隆活動中心後方 · Behind Shilong Activity Center</div></div>
+        <div class="cdetail" style="padding: 30px 0px 0px"><div class="k">球場管理員電話 · Court Manager</div><div class="v">官方聯絡方式整理中</div><div class="sub">Official contact details coming soon.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img class="knot" src="brand/knot-bone.png" alt="Ching Xin knot mark">
+        <div class="footer__welcome">Welcome to Ching Xin.<span class="cn">        歡 迎 來 到 清 心 </span></div>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <span>CHING XIN TENNIS ASSOCIATION · 高雄市清心網球協會</span>
+      <span>
+</span>
+      <span class="ig">@chingxin.tennis</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">Close ✕</button>
+  <img id="lbImg" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<div id="tweaks-root"></div>
+
+<script src="image-slot.js"></script>
+<script>
+/* ── Photo loader / 照片載入器 ───────────────────────────────
+   讀 photos/images.json ，把每一章的照片填進去。
+   換圖：① 覆蓋 photos/ 內的同名圖片，或 ② 修改 photos/images.json。
+   若 json 讀不到（例如離線開啟），會使用 HTML 內內建的預設圖。 */
+(function(){
+  var MAP = {
+    heroImage:'cx-c1', courtsImage:'cx-courts-blue', aboutImage:'cx-c3',
+    learningImage:'cx-learning', stringingImage:'cx-stringing',
+    communityImage:'cx-comm-hero', membershipImage:'cx-mem-bg'
+  };
+  fetch('photos/images.json', {cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(images){
+      Object.keys(MAP).forEach(function(key){
+        var path = images[key]; if(!path || key.charAt(0)==='_') return;
+        var slot = document.getElementById(MAP[key]); if(!slot) return;
+        slot.setAttribute('src', path);
+      });
+    })
+    .catch(function(e){ console.warn('[images] photos/images.json not loaded; using built-in defaults —', e); });
+})();
+</script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-app.jsx"></script>
+<script>
+(function(){
+  // Swallow the benign "ResizeObserver loop" notification (fired by layout
+  // observers in the image-slot component; harmless, breaks nothing).
+  window.addEventListener('error', function(e){
+    if (e && e.message && e.message.indexOf('ResizeObserver loop') !== -1) {
+      e.stopImmediatePropagation(); e.preventDefault();
+    }
+  });
+  var topbar = document.getElementById('topbar');
+  var counter = document.getElementById('counter');
+  var scrollcue = document.getElementById('scrollcue');
+  var cCur = document.getElementById('cCur'), cLine = document.getElementById('cLine');
+  var chapters = [].slice.call(document.querySelectorAll('[data-chapter]'));
+  var navSections = [].slice.call(document.querySelectorAll('[data-nav]'));
+  document.getElementById('cTot').textContent = ('0'+chapters.length).slice(-2);
+
+  function onScroll(){
+    if (window.scrollY > 40) topbar.classList.add('condensed'); else topbar.classList.remove('condensed');
+    var nearEnd = (window.innerHeight + window.scrollY) > (document.body.offsetHeight - window.innerHeight * 1.2);
+    scrollcue.classList.toggle('hide', nearEnd);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var themeObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var theme = e.target.getAttribute('data-nav') || 'dark';
+      topbar.setAttribute('data-theme', theme);
+      counter.setAttribute('data-theme', theme);
+      scrollcue.setAttribute('data-theme', theme);
+    });
+  }, {rootMargin: '-45% 0px -50% 0px', threshold: 0});
+  navSections.forEach(function(s){ themeObs.observe(s); });
+
+  var chapObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        var n = parseInt(e.target.getAttribute('data-chapter'),10);
+        if(n){
+          cCur.textContent = ('0'+n).slice(-2);
+          cLine.style.setProperty('--prog', Math.round(n/chapters.length*100)+'%');
+        }
+      }
+    });
+  }, {threshold: 0.18});
+  chapters.forEach(function(c){ chapObs.observe(c); });
+
+  // robust fallback: any chapter with its top in the upper viewport is revealed
+  // (covers tall mobile sections where 18% may still exceed the screen)
+  function revealVisible(){
+    chapters.forEach(function(c){
+      var r = c.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.82 && r.bottom > window.innerHeight * 0.1) c.classList.add('in');
+    });
+  }
+  window.addEventListener('scroll', revealVisible, {passive:true});
+  window.addEventListener('resize', revealVisible, {passive:true});
+
+  // reveal anything already in view on load — don't wait for the first async
+  // IntersectionObserver tick (prevents a blank hero on first paint)
+  requestAnimationFrame(function(){
+    chapters.forEach(function(c){
+      var r = c.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9 && r.bottom > 0) c.classList.add('in');
+    });
+  });
+
+  var rObs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); rObs.unobserve(e.target);} }); }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(function(el){ rObs.observe(el); });
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(ev){
+      var id = a.getAttribute('href'); if(id === '#') return;
+      var t = document.querySelector(id);
+      if(t){ ev.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
+  function slotSrc(slot){ if(!slot||!slot.shadowRoot) return null; var img = slot.shadowRoot.querySelector('img[part=image]'); return (img && img.src && img.style.display!=='none') ? img.src : null; }
+  document.querySelectorAll('.gal-plate').forEach(function(item){
+    item.addEventListener('click', function(){
+      var src = slotSrc(item.querySelector('image-slot')); if(!src) return;
+      lbImg.src = src; var cap = item.querySelector('.cap'); lbCap.textContent = cap?cap.textContent:'';
+      lb.classList.add('open');
+    });
+  });
+  function closeLb(){ lb.classList.remove('open'); }
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  lb.addEventListener('click', function(e){ if(e.target===lb) closeLb(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLb(); });
+
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var topbarEl = document.getElementById('topbar');
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    if(navToggle) navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(navToggle) navToggle.classList.toggle('is-open', open);
+    if(mobileMenu){ mobileMenu.classList.toggle('open', open); mobileMenu.setAttribute('aria-hidden', open ? 'false':'true'); }
+    if(topbarEl){ topbarEl.classList.toggle('nav-active', open); }
+  }
+  if(navToggle){ navToggle.addEventListener('click', function(){ setMenu(!document.body.classList.contains('menu-open')); }); }
+  if(mobileMenu){
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') setMenu(false); });
+})();
+</script>
+
+<template id="__bundler_thumbnail" data-bg-color="#A85B3E">
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#A85B3E"/>
+  <g fill="#F5F1E8" transform="translate(600 330)">
+    <path d="M-26-150c-34 0-54 20-54 60s20 60 54 60 54-20 54-60-20-60-54-60zm0 92c-13 0-22-13-22-32s9-32 22-32 22 13 22 32-9 32-22 32z" transform="translate(0 -2) scale(0.62)"/>
+    <rect x="-150" y="-12" width="300" height="22" rx="11" transform="rotate(45)"/>
+    <rect x="-150" y="-12" width="300" height="22" rx="11" transform="rotate(-45)"/>
+  </g>
+  <text x="600" y="560" font-family="Georgia, serif" font-size="92" fill="#F5F1E8" text-anchor="middle" letter-spacing="6">清 心</text>
+  <text x="600" y="630" font-family="Georgia, serif" font-size="30" fill="#F5F1E8" text-anchor="middle" letter-spacing="10" opacity="0.85">CHING XIN · TENNIS</text>
+</svg>
+</template>
+
+</body>
+</html>
