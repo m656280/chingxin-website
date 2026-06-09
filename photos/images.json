@@ -1,0 +1,17 @@
+{
+  "_readme_1": "清心網球 — 照片對照表 / Ching Xin photo map.",
+  "_readme_2": "換照片有兩種方式 / Two ways to change a photo:",
+  "_readme_3": "  (1) 最簡單：把 photos/ 內的圖片換成「同樣檔名」覆蓋即可，這個檔不用動。",
+  "_readme_4": "      Easiest: replace the file inside photos/ keeping the SAME filename.",
+  "_readme_5": "  (2) 進階：把下面的檔名改成你的新檔名（檔案要放在 photos/ 裡）。",
+  "_readme_6": "      Advanced: edit the filename below (the file must sit inside photos/).",
+  "_readme_7": "底線開頭的 _readme 只是說明，不影響網站。Lines starting with _ are notes only.",
+
+  "heroImage":      "photos/01-hero-philosophy.jpg",
+  "courtsImage":    "photos/02-courts-blue.jpg",
+  "aboutImage":     "photos/03-about-gathering.jpg",
+  "learningImage":  "photos/05-learning.jpg",
+  "stringingImage": "photos/06-stringing.jpg",
+  "communityImage": "photos/07-community-3.jpg",
+  "membershipImage": "photos/08-membership.jpg"
+}
