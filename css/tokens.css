@@ -1,0 +1,367 @@
+/* ============================================================
+   8eyesproject — Foundations
+   八目設計協製
+   ============================================================
+   This is not a UI kit. It is a methodology, expressed in
+   tokens. Every page, component, and slide carries one of
+   the EIGHT STEPS — the spine of the practice.
+
+      01 · UNDERSTANDING   理 解
+      02 · ALIGNING        對 齊
+      03 · TRANSLATING     轉 譯
+      04 · STRUCTURING     結 構
+      05 · BUILDING        建 造
+      06 · REFINING        修 整
+      07 · COMPLETING      完 成
+      08 · CONTINUING      延 續
+
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Serif+TC:wght@200;300;400;500&family=Inter:wght@300;400;500&family=Noto+Sans+TC:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ============================================================
+     PALETTE — pulled directly from the work
+     ============================================================
+     Sun Kissed · Bakery Brown · Urban Taupe · Fresh Linen
+     plus the dark wood / shadow / charcoal that anchors them.
+     Warm but mature. Never beige-on-beige fluff. The dark end
+     is charcoal-cocoa — never pure black. The light end is
+     warm linen — never pure white.
+     ============================================================ */
+
+  /* ---------- Dark anchors — depth & shadow ---------- */
+  --eye-cocoa:      #2A211A;  /* deep wood — primary type, ink */
+  --eye-charcoal:   #3D352D;  /* secondary type, long-form prose */
+  --eye-walnut:     #5A4D40;  /* tertiary, captions, eyebrows */
+  --eye-driftwood:  #8C7A68;  /* muted dividers, disabled */
+
+  /* ---------- The four warm neutrals ---------- */
+  --eye-bakery:     #A6907B;  /* Bakery Brown — accent / handcraft */
+  --eye-sun:        #C9B097;  /* Sun Kissed — warmest mid */
+  --eye-taupe:      #BBB1A5;  /* Urban Taupe — cool counter */
+  --eye-stone:      #D5CBBC;  /* Stone — soft contrast */
+
+  /* ---------- Plaster & paper ---------- */
+  --eye-plaster:    #E5DDD0;  /* sunken bands, dividers */
+  --eye-linen:      #EFE7D8;  /* Fresh Linen — page surface */
+  --eye-paper:      #F5EFE3;  /* warm page, default background */
+  --eye-bone:       #FBF7EE;  /* lifted card surface */
+
+  /* ---------- Single chromatic note ---------- */
+  /* Used only as a stamp / mark / one detail per surface.    */
+  --eye-rust:       #8E5A3C;  /* Rust ink — the one sparing tint */
+
+  /* ---------- Semantic surfaces ---------- */
+  --bg-page:        var(--eye-paper);
+  --bg-surface:     var(--eye-bone);
+  --bg-sunken:      var(--eye-plaster);
+  --bg-warm:        var(--eye-linen);
+  --bg-inverse:     var(--eye-cocoa);
+
+  /* ---------- Foregrounds ---------- */
+  --fg-primary:    var(--eye-cocoa);
+  --fg-secondary:  var(--eye-charcoal);
+  --fg-tertiary:   var(--eye-walnut);
+  --fg-muted:      var(--eye-driftwood);
+  --fg-on-inverse: var(--eye-linen);
+  --fg-accent:     var(--eye-bakery);
+  --fg-mark:       var(--eye-rust);
+
+  /* ---------- Lines — never pure ink ---------- */
+  /* All lines are cocoa-tinted at low opacity — never gray. */
+  --line-hairline: rgba(42, 33, 26, 0.10);
+  --line-soft:     rgba(42, 33, 26, 0.20);
+  --line-strong:   rgba(42, 33, 26, 0.45);
+  --line-ink:      var(--eye-cocoa);
+
+  /* Legacy aliases — kept so existing components don't break */
+  --eye-ink:       var(--eye-cocoa);
+  --eye-graphite:  var(--eye-charcoal);
+  --eye-ash:       var(--eye-walnut);
+  --eye-mist:      var(--eye-stone);
+  --eye-accent:    var(--eye-bakery);
+
+  /* ============================================================
+     MATERIAL LAYER — texture as a token
+     ============================================================
+     The system carries texture in CSS — paper grain, plaster
+     mottle, soft drop-shadow as a "shadow on the wall" rather
+     than UI elevation. Use these as backgrounds and rule lines
+     so surfaces feel atmospheric, not flat.
+     ============================================================ */
+
+  /* Subtle paper grain — fractal noise tinted into linen */
+  --tex-paper: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.13  0 0 0 0 0.10  0 0 0 0.045 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  /* Plaster mottle — softer, larger, warmer */
+  --tex-plaster: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='480' height='480'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18  0 0 0 0 0.13  0 0 0 0 0.08  0 0 0 0.07 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  /* Wood-grain — vertical streaks, very faint, for dark surfaces */
+  --tex-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='480'><filter id='g'><feTurbulence type='turbulence' baseFrequency='0.012 0.6' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.03  0 0 0 0 0.02  0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+
+  /* "Light from the side" — atmospheric vignette, top-left to bottom-right */
+  --tex-light: linear-gradient(135deg,
+    rgba(255, 246, 232, 0.35) 0%,
+    rgba(255, 246, 232, 0)   38%,
+    rgba(42, 33, 26, 0.06)   100%);
+
+  /* Surface presets, ready to paint onto a background */
+  --surface-paper:   var(--tex-light), var(--tex-paper),    var(--eye-paper);
+  --surface-linen:   var(--tex-light), var(--tex-paper),    var(--eye-linen);
+  --surface-plaster: var(--tex-plaster), var(--eye-plaster);
+  --surface-cocoa:   var(--tex-grain),  var(--eye-cocoa);
+
+  /* ============================================================
+     EIGHT STEPS — the spine
+     Each step has a numeric index, an EN name, and a 中文 name.
+     They are referenced from chrome, not just from one process page.
+     ============================================================ */
+  --step-01-en: "Understanding";
+  --step-02-en: "Aligning";
+  --step-03-en: "Translating";
+  --step-04-en: "Structuring";
+  --step-05-en: "Building";
+  --step-06-en: "Refining";
+  --step-07-en: "Completing";
+  --step-08-en: "Continuing";
+
+  --step-01-cn: "理 解";
+  --step-02-cn: "對 齊";
+  --step-03-cn: "轉 譯";
+  --step-04-cn: "結 構";
+  --step-05-cn: "建 造";
+  --step-06-cn: "修 整";
+  --step-07-cn: "完 成";
+  --step-08-cn: "延 續";
+
+  /* ---------- Type families ---------- */
+  --font-display: 'Cormorant Garamond', 'Noto Serif TC', 'Songti TC',
+                  'PingFang TC', serif;
+  --font-sans:    'Inter', 'Noto Sans TC', 'PingFang TC',
+                  -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif:   'Noto Serif TC', 'Cormorant Garamond', 'Songti TC',
+                  'PingFang TC', serif;
+  --font-mono:    'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* ---------- Type scale ---------- */
+  --fs-display-xl: clamp(56px, 9vw, 128px);
+  --fs-display:    clamp(40px, 6vw, 80px);
+  --fs-h1:         clamp(32px, 4.4vw, 56px);
+  --fs-h2:         clamp(26px, 3.2vw, 40px);
+  --fs-h3:         24px;
+  --fs-h4:         18px;
+  --fs-body:       16px;
+  --fs-body-sm:    14px;
+  --fs-caption:    12px;
+  --fs-eyebrow:    11px;
+
+  /* ---------- Line height ---------- */
+  --lh-display: 1.0;
+  --lh-heading: 1.16;
+  --lh-body:    1.7;
+  --lh-tight:   1.3;
+
+  /* ---------- Letter spacing ---------- */
+  --tracking-display:  -0.015em;
+  --tracking-eyebrow:  0.36em;   /* tighter restraint, wider track */
+  --tracking-label:    0.24em;
+  --tracking-cjk-wide: 0.55em;
+  --tracking-mono:     0.04em;
+  --tracking-body:     0;
+
+  /* ---------- Spacing — architectural ---------- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  48px;
+  --sp-8:  64px;
+  --sp-9:  96px;
+  --sp-10: 128px;
+  --sp-11: 192px;
+
+  /* ---------- Radius — square only ---------- */
+  --r-none:  0;
+  --r-sm:    2px;     /* the only acceptable rounding */
+  --r-pill:  999px;   /* sparingly, for status only */
+
+  /* ---------- Elevation — depth via paper, not shadow ---------- */
+  /* All shadows are cocoa-tinted to read as light through a   */
+  /* room, never as a UI dropshadow.                            */
+  --shadow-none: none;
+  --shadow-soft: 0 1px 2px rgba(42, 33, 26, 0.05),
+                 0 12px 32px rgba(42, 33, 26, 0.07);
+  --shadow-deep: 0 2px 4px rgba(42, 33, 26, 0.08),
+                 0 28px 64px rgba(42, 33, 26, 0.14);
+  --shadow-wall: 0 18px 48px -16px rgba(42, 33, 26, 0.30);  /* image plate */
+
+  /* ---------- Motion ---------- */
+  --ease-quiet: cubic-bezier(0.32, 0.08, 0.24, 1);
+  --ease-enter: cubic-bezier(0.16, 0.84, 0.44, 1);
+  --dur-fast:   180ms;
+  --dur-base:   320ms;
+  --dur-slow:   620ms;
+}
+
+/* ============================================================
+   Semantic class styles
+   ============================================================ */
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.eyebrow-cjk {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: var(--tracking-cjk-wide);
+  color: var(--fg-secondary);
+  font-weight: 300;
+}
+
+.display-xl,
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--lh-display);
+  color: var(--fg-primary);
+}
+.display-xl { font-size: var(--fs-display-xl); }
+.display    { font-size: var(--fs-display); }
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg-primary);
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+  color: var(--fg-primary);
+}
+
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  color: var(--fg-primary);
+}
+
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h4);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  color: var(--fg-primary);
+}
+
+p, .body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  color: var(--fg-secondary);
+}
+
+.body-serif {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--fg-secondary);
+}
+
+.caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: var(--fg-tertiary);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-mono);
+  color: var(--fg-tertiary);
+}
+
+.cjk-spaced {
+  font-family: var(--font-serif);
+  letter-spacing: var(--tracking-cjk-wide);
+  font-weight: 300;
+}
+
+/* ============================================================
+   Resets
+   ============================================================ */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--surface-paper);
+  background-attachment: fixed;
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   Material utilities — drop these classes onto any surface
+   to inherit the warm-paper / plaster / cocoa atmosphere.
+   ============================================================ */
+.surface-paper   { background: var(--surface-paper); }
+.surface-linen   { background: var(--surface-linen); }
+.surface-plaster { background: var(--surface-plaster); }
+.surface-cocoa   { background: var(--surface-cocoa);
+                   color: var(--fg-on-inverse); }
+
+/* A "shadow on the wall" plate — an image card that reads as
+   a printed photograph hung on a plaster wall, not a UI tile. */
+.plate {
+  background: var(--eye-bone);
+  box-shadow: var(--shadow-wall);
+}
+
+/* A material-aware divider. Looks like a faint pencil rule
+   with a hairline shadow drop, not a CSS border. */
+.rule {
+  border: 0;
+  height: 1px;
+  background: var(--line-hairline);
+  margin: 0;
+}
+.rule-shadowed {
+  border: 0;
+  height: 0;
+  margin: 0;
+  border-top: 1px solid var(--line-hairline);
+  box-shadow: 0 1px 0 rgba(255, 246, 232, 0.6);  /* light catches under the rule */
+}

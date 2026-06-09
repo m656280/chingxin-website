@@ -1,0 +1,196 @@
+/* ============================================================
+   Ching Xin — Mobile / RWD layer
+   Loaded LAST. Desktop design untouched; everything here is
+   inside max-width media queries (plus the mobile menu drawer).
+   Tested targets: 390px · 430px · 768px.
+   ============================================================ */
+
+/* ---- mobile menu drawer (shared) ---- */
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 48;
+  background: var(--cx-ink);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(72px, 12vh, 120px) 30px 40px;
+  opacity: 0; visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity .42s var(--ease-quiet), transform .42s var(--ease-quiet), visibility .42s;
+}
+.mobile-menu.open { opacity: 1; visibility: visible; transform: none; }
+.mobile-menu__nav { display: flex; flex-direction: column; }
+.mobile-menu__nav a {
+  display: flex; align-items: baseline; gap: 16px;
+  padding: clamp(13px, 2.1vh, 20px) 0;
+  border-bottom: 1px solid rgba(245,241,232,0.12);
+  color: var(--cx-bone); text-decoration: none;
+}
+.mobile-menu__nav a .mm-en {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(28px, 8vw, 40px); line-height: 1; letter-spacing: 0.01em;
+}
+.mobile-menu__nav a .mm-cn {
+  font-family: var(--font-serif); font-size: 14px; letter-spacing: 0.3em;
+  color: var(--cx-clay-soft); margin-left: auto;
+}
+.mobile-menu__foot {
+  margin-top: clamp(28px, 5vh, 48px);
+  font-family: var(--font-serif); font-size: 12px; letter-spacing: 0.28em;
+  color: rgba(245,241,232,0.4); text-align: center;
+}
+body.menu-open { overflow: hidden; }
+
+/* hamburger → X */
+.nav-toggle .nt-bars { position: relative; width: 26px; height: 14px; display: block; }
+.nav-toggle .nt-bars i {
+  position: absolute; left: 0; width: 100%; height: 1.5px; background: currentColor;
+  transition: transform .34s var(--ease-quiet), opacity .2s;
+}
+.nav-toggle .nt-bars i:nth-child(1){ top: 2px; }
+.nav-toggle .nt-bars i:nth-child(2){ bottom: 2px; }
+.nav-toggle.is-open .nt-bars i:nth-child(1){ top: 50%; transform: translateY(-50%) rotate(45deg); }
+.nav-toggle.is-open .nt-bars i:nth-child(2){ bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+/* topbar while drawer open: solid ink, bone marks above the drawer */
+.topbar.nav-active { background: transparent; border-bottom-color: transparent; color: var(--cx-bone) !important; z-index: 50; }
+.topbar.nav-active .brandlock .knot .k-light { display: block; }
+.topbar.nav-active .brandlock .knot .k-dark { display: none; }
+
+/* ============================================================
+   <= 980px  (tablet → the nav collapses; site.css already
+   hides .navlinks and shows .nav-toggle here)
+   ============================================================ */
+@media (max-width: 980px) {
+  .nav-toggle { display: flex !important; align-items: center; justify-content: center;
+    width: 44px; height: 44px; margin: -10px -8px -10px 0; padding: 0;
+    background: none; border: 0; color: inherit; cursor: pointer; }
+}
+
+/* ============================================================
+   <= 768px   MAIN MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  /* topbar tightening */
+  .topbar { padding: 16px 20px; }
+  .topbar.condensed[data-theme="light"] { padding-top: 11px; padding-bottom: 11px; }
+  .brandlock .knot { width: 26px; height: 26px; }
+  .brandlock .wm .en { font-size: 16px; letter-spacing: 0.12em; }
+  .brandlock .wm .assoc { font-size: 7.5px; letter-spacing: 0.18em; margin-top: 3px; }
+
+  /* hide the side chrome (already hidden < 720 but cover 768 too) */
+  .counter, .scrollcue-fixed, .hero__watermark { display: none !important; }
+
+  /* ---- universal chapter rhythm: single column, generous but contained ---- */
+  .chapter { min-height: 100svh; }
+  .chapter__inner { padding-top: clamp(92px, 16vh, 120px); padding-bottom: clamp(40px, 7vh, 64px); }
+  .chapter.ch-bottom .chapter__inner { padding-top: clamp(120px, 24vh, 200px); padding-bottom: clamp(40px, 7vh, 64px); }
+  .wrap { padding: 0 24px; }
+
+  /* ---- type scaling (override desktop clamps + inline sizes) ---- */
+  .ch-title,
+  #ch-courts .ch-title,
+  #ch-community .ch-title,
+  #ch-learning .ch-title,
+  #ch-stringing .ch-title {
+    font-size: clamp(38px, 12vw, 60px) !important;
+    line-height: 1.0 !important;
+    margin-bottom: 0 !important;
+  }
+  .ch-title .it { font-size: inherit !important; }
+  #top .ch-title .it { font-size: inherit !important; }
+
+  .ch-eyebrow { font-size: 10px; letter-spacing: 0.26em; margin-bottom: 22px !important; flex-wrap: wrap; }
+  .ch-eyebrow .ln { width: 28px; }
+  .ch-cn { font-size: 14px !important; letter-spacing: 0.22em; line-height: 1.95; margin-top: 18px; max-width: 100% !important; }
+  .ch-sub { font-size: 15px; line-height: 1.7; margin-top: 20px; max-width: 100% !important; }
+  .ch-cta { font-size: 11px; margin-top: 26px; }
+
+  /* ---- pillars (About / Learning / Stringing): 2×2, compact ---- */
+  .pillars-over { grid-template-columns: 1fr 1fr; gap: 20px 18px; margin-top: clamp(26px, 4vh, 40px) !important; padding-top: 22px; }
+  .pillars-over .po .en { font-size: clamp(17px, 5vw, 22px); margin: 10px 0 3px; }
+  .pillars-over .po .cn { font-size: 12px; letter-spacing: 0.24em; }
+  .pillars-over .po .d { font-size: 11.5px; margin-top: 8px; }
+
+  /* ---- Courts facts: wrap as 2-col grid, contained ---- */
+  .courtfacts { gap: 22px 32px; margin-top: 26px; padding-top: 20px; }
+  .courtfacts .cf .v { font-size: 18px !important; }
+  .courtfacts .cf .k { font-size: 9.5px; }
+
+  /* ---- scrims a touch stronger on small screens for legibility ---- */
+  .chapter.ch-photo .chapter__scrim { box-shadow: inset 0 0 160px 50px rgba(8,6,4,0.62); }
+  .ch-clay  .chapter__scrim,
+  .ch-blue  .chapter__scrim,
+  .ch-green .chapter__scrim,
+  .ch-gold  .chapter__scrim { background-image:
+      linear-gradient(0deg, rgba(20,12,8,0.74) 0%, rgba(20,12,8,0.12) 52%, rgba(20,12,8,0.34) 100%); }
+
+  /* keep photographic subjects in frame on a narrow crop */
+  #cx-c1::part(image), #cx-courts-blue::part(image), #cx-c3::part(image),
+  #cx-learning::part(image), #cx-stringing::part(image), #cx-comm-hero::part(image),
+  #cx-mem-bg::part(image) { object-position: 60% 50% !important; }
+  #cx-stringing::part(image) { object-position: 50% 40% !important; }
+
+  /* ============================================================
+     07 · MEMBERSHIP — single column, full-bleed bg preserved
+     ============================================================ */
+  .membership-photo { min-height: 100svh; padding: clamp(96px, 16vh, 130px) 0 clamp(48px, 8vh, 72px); }
+  .membership-photo .wrap { padding: 0 24px !important; margin: 0 auto !important; width: auto !important; }
+  .mem-head { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; }
+  .mem-head h2 { font-size: clamp(30px, 9vw, 44px) !important; }
+  .mem-cards { grid-template-columns: 1fr !important; max-width: 420px !important; gap: 14px; }
+  .mem-card { padding: 22px !important; }
+  .mem-card .mc-num { font-size: 26px !important; }
+  .mem-card li { padding: 7px 0 !important; }
+  .mem-card .li-cn { font-size: 14px !important; }
+  .mem-card .mc-btn { padding: 14px !important; min-height: 46px; display: flex; align-items: center; justify-content: center; }
+  .mem-note-dark { font-size: 12px; padding: 0 8px; }
+
+  /* ============================================================
+     08 · CONTACT + FOOTER — stack, full dark bleed, tappable
+     ============================================================ */
+  .contact { min-height: auto !important; padding: clamp(96px, 16vh, 130px) 0 clamp(56px, 9vh, 84px) !important; }
+  .contact__grid { grid-template-columns: 1fr !important; gap: 40px; }
+  .contact h2 { font-size: clamp(40px, 13vw, 68px); }
+  .contact__cn { font-size: 14px; }
+  .contact__lead { font-size: 16px; max-width: 100%; }
+  .contact__details { gap: 22px; }
+  .cdetail .v { font-size: 19px; }
+  .cdetail .v a { display: inline-block; padding: 4px 0; min-height: 32px; }
+
+  .footer__top { flex-direction: column; align-items: flex-start; gap: 22px; padding: 44px 0 30px; }
+  .footer__brand { gap: 16px; }
+  .footer__brand .knot { width: 40px; }
+  .footer__welcome { font-size: clamp(22px, 7vw, 30px); white-space: normal; }
+  .footer__bar { gap: 8px 18px; padding: 20px 0 30px; font-size: 9.5px; line-height: 1.5; }
+
+  /* tap targets: nav-join in drawer already large; ensure cta links comfy */
+  .ch-cta { min-height: 40px; display: inline-flex; align-items: center; }
+}
+
+/* ============================================================
+   <= 480px   FINE TUNE (390 / 430)
+   ============================================================ */
+@media (max-width: 480px) {
+  .wrap { padding: 0 20px; }
+  .ch-title,
+  #ch-courts .ch-title,
+  #ch-community .ch-title,
+  #ch-learning .ch-title,
+  #ch-stringing .ch-title { font-size: clamp(34px, 11.5vw, 50px) !important; }
+  .contact h2 { font-size: clamp(36px, 13vw, 56px); }
+
+  /* pillars: stay 2×2 but allow single col if extremely tight content */
+  .pillars-over { gap: 18px 16px; }
+
+  /* courtfacts to two columns cleanly */
+  .courtfacts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; }
+
+  /* mobile menu items a touch smaller so 7 links + footer fit 390×844 */
+  .mobile-menu { padding-top: clamp(64px, 11vh, 96px); }
+  .mobile-menu__nav a { padding: clamp(11px, 1.7vh, 16px) 0; }
+  .mobile-menu__nav a .mm-en { font-size: clamp(26px, 8vw, 34px); }
+}
+
+/* very short landscape phones: don't force full height that clips text */
+@media (max-height: 560px) and (max-width: 980px) {
+  .chapter, .membership-photo { min-height: auto; }
+  .chapter__inner { padding-top: 92px; padding-bottom: 48px; }
+}
