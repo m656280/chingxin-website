@@ -1,6 +1,16 @@
 # Ching Xin Tennis Association Website
 
-清心網球協會官方網站。
+清心網球協會官方網站（對外介紹用的靜態官網）。
+
+線上網址：https://chingxin-website.vercel.app
+
+## 與 chingxin-tennis 的關係 / Relationship to chingxin-tennis
+
+本 repo（`chingxin-website`）是**對外公開的靜態官網**，純 HTML/CSS。
+
+另一個 repo `chingxin-tennis` 是**完全不同的專案**——清心球場的營運管理「後台系統」（Vite + React + TypeScript + Firebase + LINE LIFF），與本官網無關。
+
+兩者請勿混用：官網的檔案只放在 `chingxin-website`，後台的程式只放在 `chingxin-tennis`。
 
 ## 專案類型 / Project Type
 
