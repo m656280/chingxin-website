@@ -53,6 +53,16 @@
 .contact-msg-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:none;border:1px solid rgba(251,247,238,.55);color:var(--eye-bone,#FBF7EE);padding:13px 28px;font-family:var(--font-sans,sans-serif);font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s}
 .contact-msg-btn:hover{background:rgba(251,247,238,.12);border-color:var(--eye-bone,#FBF7EE)}
 @media(max-width:600px){.cf-modal{padding:40px 24px 32px}}
+/* Thank-you state */
+.cf-thanks{display:none;text-align:center;padding:8px 0 4px}
+.cf-modal.is-thanks .cf-eyebrow-sm,.cf-modal.is-thanks .cf-title,.cf-modal.is-thanks .cf-form{display:none}
+.cf-modal.is-thanks .cf-thanks{display:block}
+.cf-thanks-check{width:48px;height:48px;border-radius:50%;background:rgba(74,124,89,.12);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:22px;color:#4a7c59}
+.cf-thanks-main{font-family:var(--font-display,'Cormorant Garamond',serif);font-size:24px;font-weight:400;color:var(--eye-cocoa,#2A211A);margin:0 0 14px;line-height:1.3;letter-spacing:-.01em}
+.cf-thanks-body{font-family:var(--font-sans,sans-serif);font-size:15px;line-height:1.75;color:var(--eye-charcoal,#3D352D);margin:0 0 12px}
+.cf-thanks-en{font-family:var(--font-sans,sans-serif);font-size:12px;line-height:1.65;color:var(--eye-walnut,#5A4D40);margin:0 0 28px;letter-spacing:.01em}
+.cf-thanks-close{background:var(--eye-cocoa,#2A211A);color:var(--eye-bone,#FBF7EE);border:none;padding:14px 36px;font-family:var(--font-sans,sans-serif);font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;cursor:pointer;transition:opacity .18s}
+.cf-thanks-close:hover{opacity:.82}
 </style>
 <script>
 // Wrap ResizeObserver so its callback runs on the next animation frame.
@@ -351,7 +361,7 @@ by your own hand</h2>
       <input type="hidden" name="_subject" value="清心網球網站聯絡表單">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_next" value="https://chingxin-website.vercel.app/#ch-contact">
+      <input type="hidden" name="_next" value="https://chingxin-website.vercel.app/?sent=1">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="cf-row">
         <label class="cf-label" for="cfName">姓名 <span class="req">*</span></label>
@@ -378,6 +388,13 @@ by your own hand</h2>
       </div>
       <div class="cf-feedback" id="cfFeedback" aria-live="polite"></div>
     </form>
+    <div class="cf-thanks" id="cfThanks">
+      <div class="cf-thanks-check">✓</div>
+      <p class="cf-thanks-main">感謝您的詢問。<br>我們已收到您的訊息，<br>請耐心等候回信。</p>
+      <p class="cf-thanks-body">若遲遲未收到回覆，<br>也歡迎親自到球場現場諮詢。</p>
+      <p class="cf-thanks-en">Thank you for reaching out. We have received your message and will reply as soon as possible.</p>
+      <button class="cf-thanks-close" id="cfThanksClose">返回網站 · Close</button>
+    </div>
   </div>
 </div>
 
@@ -534,12 +551,15 @@ by your own hand</h2>
 /* ── Contact Form Modal ───────────────────────────────────── */
 (function(){
   var overlay = document.getElementById('cfOverlay');
+  var modal = overlay.querySelector('.cf-modal');
   var closeBtn = document.getElementById('cfClose');
+  var thanksCloseBtn = document.getElementById('cfThanksClose');
   var form = document.getElementById('cfForm');
   var subjectInput = document.getElementById('cfSubject');
   var feedback = document.getElementById('cfFeedback');
 
   function openModal(preset){
+    modal.classList.remove('is-thanks');
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
@@ -549,15 +569,28 @@ by your own hand</h2>
     setTimeout(function(){ document.getElementById('cfName').focus(); }, 80);
   }
 
+  function showThanks(){
+    modal.classList.add('is-thanks');
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    /* 清除 URL 的 ?sent=1，不影響畫面 */
+    if(window.history && window.history.replaceState){
+      history.replaceState(null,'',window.location.pathname);
+    }
+  }
+
   function closeModal(){
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
+    modal.classList.remove('is-thanks');
   }
 
   window.openContactForm = openModal;
 
   closeBtn.addEventListener('click', closeModal);
+  if(thanksCloseBtn) thanksCloseBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && overlay.classList.contains('open')) closeModal(); });
 
@@ -579,9 +612,14 @@ by your own hand</h2>
       feedback.className='cf-feedback err';
       return;
     }
-    /* 驗證通過 — 不呼叫 preventDefault()，讓 form 正常 POST 至 FormSubmit */
+    /* 驗證通過 — 讓 form 正常 POST 至 FormSubmit */
     document.body.style.overflow='';
   });
+
+  /* 偵測 FormSubmit 成功後的 redirect ?sent=1 */
+  if(window.location.search.indexOf('sent=1') !== -1){
+    showThanks();
+  }
 })();
 </script>
 
