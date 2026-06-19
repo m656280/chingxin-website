@@ -358,14 +358,15 @@ by your own hand</h2>
     <div class="cf-eyebrow-sm">聯絡我們 · Get in touch</div>
     <h3 class="cf-title" id="cfModalTitle">Send us a message</h3>
     <form id="cfForm" class="cf-form" action="https://formsubmit.co/chingxin666@gmail.com" method="POST">
-      <input type="hidden" name="_subject" value="清心網球網站聯絡表單">
+      <input type="hidden" name="_subject" value="【清心網球協會】新聯絡表單">
       <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_template" value="text">
       <input type="hidden" name="_next" value="https://chingxin-website.vercel.app/?sent=1">
+      <input type="hidden" name="送出時間" id="cfDateTime">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="cf-row">
         <label class="cf-label" for="cfName">姓名 <span class="req">*</span></label>
-        <input class="cf-input" type="text" id="cfName" name="name" required autocomplete="name">
+        <input class="cf-input" type="text" id="cfName" name="姓名" required autocomplete="name">
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfEmail">Email <span class="req">*</span></label>
@@ -373,15 +374,15 @@ by your own hand</h2>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfPhone">電話 <span class="opt">選填</span></label>
-        <input class="cf-input" type="tel" id="cfPhone" name="phone" autocomplete="tel">
+        <input class="cf-input" type="tel" id="cfPhone" name="電話" autocomplete="tel">
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfSubject">主旨 <span class="req">*</span></label>
-        <input class="cf-input" type="text" id="cfSubject" name="subject" required>
+        <input class="cf-input" type="text" id="cfSubject" name="申請類別" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfMessage">訊息內容 <span class="req">*</span></label>
-        <textarea class="cf-input cf-textarea" id="cfMessage" name="message" rows="5" required></textarea>
+        <textarea class="cf-input cf-textarea" id="cfMessage" name="內容" rows="5" required></textarea>
       </div>
       <div class="cf-actions">
         <button type="submit" class="cf-submit" id="cfSubmit">傳送訊息 · Send</button>
@@ -596,6 +597,9 @@ by your own hand</h2>
 
   /* 前端驗證 — 通過後讓原生 form POST 正常送出 */
   form.addEventListener('submit', function(e){
+    /* 填入送出時間 */
+    var dt = document.getElementById('cfDateTime');
+    if(dt) dt.value = new Date().toLocaleString('zh-TW', {timeZone:'Asia/Taipei', hour12:false});
     var name = document.getElementById('cfName').value.trim();
     var email = document.getElementById('cfEmail').value.trim();
     var subject = subjectInput.value.trim();
