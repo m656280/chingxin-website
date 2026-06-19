@@ -23,6 +23,37 @@
 <link rel="stylesheet" href="css/site.css">
 <link rel="stylesheet" href="css/chapters.css">
 <link rel="stylesheet" href="css/mobile.css">
+<style>
+/* ============================================================
+   CONTACT FORM MODAL
+   ============================================================ */
+.cf-overlay{position:fixed;inset:0;background:rgba(42,33,26,.82);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .28s cubic-bezier(0.32,.08,.24,1),visibility .28s cubic-bezier(0.32,.08,.24,1)}
+.cf-overlay.open{opacity:1;visibility:visible}
+.cf-modal{background:var(--eye-bone,#FBF7EE);width:100%;max-width:540px;max-height:92vh;overflow-y:auto;padding:48px 40px 40px;position:relative;box-shadow:0 2px 4px rgba(42,33,26,.08),0 28px 64px rgba(42,33,26,.22);transform:translateY(20px);transition:transform .32s cubic-bezier(0.16,.84,.44,1)}
+.cf-overlay.open .cf-modal{transform:translateY(0)}
+.cf-close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--eye-walnut,#5A4D40);line-height:1;padding:4px 8px;font-family:var(--font-sans,sans-serif);transition:color .15s}
+.cf-close:hover{color:var(--eye-cocoa,#2A211A)}
+.cf-eyebrow-sm{font-family:var(--font-sans,sans-serif);font-size:11px;font-weight:500;letter-spacing:.36em;text-transform:uppercase;color:var(--eye-walnut,#5A4D40);margin-bottom:8px}
+.cf-title{font-family:var(--font-display,'Cormorant Garamond',serif);font-size:28px;font-weight:400;color:var(--eye-cocoa,#2A211A);margin:0 0 28px;letter-spacing:-.01em}
+.cf-form{display:flex;flex-direction:column;gap:18px}
+.cf-row{display:flex;flex-direction:column;gap:6px}
+.cf-label{font-family:var(--font-sans,sans-serif);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--eye-walnut,#5A4D40)}
+.cf-label .req{color:var(--eye-rust,#8E5A3C);margin-left:2px}
+.cf-label .opt{font-weight:400;text-transform:none;letter-spacing:0;opacity:.6;margin-left:4px}
+.cf-input{background:transparent;border:none;border-bottom:1px solid rgba(42,33,26,.45);padding:8px 0;font-family:var(--font-sans,sans-serif);font-size:16px;color:var(--eye-cocoa,#2A211A);outline:none;width:100%;transition:border-color .18s;border-radius:0;-webkit-appearance:none;appearance:none}
+.cf-input:focus{border-bottom-color:var(--eye-cocoa,#2A211A)}
+.cf-textarea{resize:vertical;min-height:110px;line-height:1.65}
+.cf-actions{margin-top:6px}
+.cf-submit{background:var(--eye-cocoa,#2A211A);color:var(--eye-bone,#FBF7EE);border:none;padding:14px 36px;font-family:var(--font-sans,sans-serif);font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;cursor:pointer;transition:opacity .18s}
+.cf-submit:hover{opacity:.82}
+.cf-submit:disabled{opacity:.5;cursor:not-allowed}
+.cf-feedback{font-family:var(--font-sans,sans-serif);font-size:14px;min-height:20px;margin-top:4px}
+.cf-feedback.ok{color:#4a7c59}
+.cf-feedback.err{color:var(--eye-rust,#8E5A3C)}
+.contact-msg-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:none;border:1px solid rgba(251,247,238,.55);color:var(--eye-bone,#FBF7EE);padding:13px 28px;font-family:var(--font-sans,sans-serif);font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s}
+.contact-msg-btn:hover{background:rgba(251,247,238,.12);border-color:var(--eye-bone,#FBF7EE)}
+@media(max-width:600px){.cf-modal{padding:40px 24px 32px}}
+</style>
 <script>
 // Wrap ResizeObserver so its callback runs on the next animation frame.
 // This prevents the benign-but-noisy "ResizeObserver loop completed with
@@ -243,7 +274,7 @@ by your own hand</h2>
           <li><span class="li-cn">由會員邀請參加</span><span class="li-en">Invited by a member</span></li>
           <li><span class="li-cn">認識清心的開始</span><span class="li-en">A first visit to Ching Xin</span></li>
         </ul>
-        <div class="mc-btn">來訪 · Say hello</div>
+        <button class="mc-btn" type="button" onclick="openContactForm('訪客體驗')">來訪 · Say hello</button>
       </div>
       <div class="mem-card feature">
         <div class="mc-cn">年費會員</div>
@@ -255,7 +286,7 @@ by your own hand</h2>
           <li><span class="li-cn">參與會內年終賽</span><span class="li-en">Annual club tournament</span></li>
           <li><span class="li-cn">可邀請朋友同行</span><span class="li-en">Bring friends along</span></li>
         </ul>
-        <div class="mc-btn">加入 · Join us</div>
+        <button class="mc-btn" type="button" onclick="openContactForm('年費會員申請')">加入 · Join us</button>
       </div>
       <div class="mem-card" style="border-width: 1px; margin: 0px">
         <div class="mc-cn">月費會員</div>
@@ -267,7 +298,7 @@ by your own hand</h2>
           <li><span class="li-cn">無長期綁約</span><span class="li-en">No long commitment</span></li>
           <li><span class="li-cn">生活忙碌可暫停</span><span class="li-en">Pause whenever life does</span></li>
         </ul>
-        <div class="mc-btn">詢問 · Enquire</div>
+        <button class="mc-btn" type="button" onclick="openContactForm('月費會員詢問')">詢問 · Enquire</button>
       </div>
     </div>
     <p class="mem-note-dark" style="margin: 15px 0px 1px">實 際 制 度 依 清 心 網 球 公 告 為 準 · Membership details follow Ching Xin's official announcements.</p>
@@ -283,6 +314,7 @@ by your own hand</h2>
         <h2 style="margin-top:0;">Come and <em>play</em>.</h2>
         <div class="contact__cn">來 打 球 。</div>
         <p class="contact__lead">歡迎先到球場走走<br>在現場與我們約球</p>
+        <button class="contact-msg-btn" type="button" onclick="openContactForm('')">Send Message <span class="ar">→</span></button>
       </div>
       <div class="contact__details reveal">
         <div class="cdetail" style="padding: 8px 0px 0px"><div class="k">球場位置 · Location</div><div class="v">高雄市橋頭區仕隆路62之1號</div><div class="sub">仕隆活動中心後方 · Behind Shilong Activity Center</div></div>
@@ -308,6 +340,45 @@ by your own hand</h2>
     </div>
   </div>
 </footer>
+
+<!-- ============ CONTACT FORM MODAL ============ -->
+<div class="cf-overlay" id="cfOverlay" aria-hidden="true">
+  <div class="cf-modal" role="dialog" aria-modal="true" aria-labelledby="cfModalTitle">
+    <button class="cf-close" id="cfClose" aria-label="關閉">✕</button>
+    <div class="cf-eyebrow-sm">聯絡我們 · Get in touch</div>
+    <h3 class="cf-title" id="cfModalTitle">Send us a message</h3>
+    <form id="cfForm" class="cf-form" novalidate>
+      <input type="hidden" name="_subject" id="cfSubjectHidden" value="清心網球協會 聯絡表單">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="cf-row">
+        <label class="cf-label" for="cfName">姓名 <span class="req">*</span></label>
+        <input class="cf-input" type="text" id="cfName" name="姓名" required autocomplete="name">
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="cfEmail">Email <span class="req">*</span></label>
+        <input class="cf-input" type="email" id="cfEmail" name="Email" required autocomplete="email">
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="cfPhone">電話 <span class="opt">選填</span></label>
+        <input class="cf-input" type="tel" id="cfPhone" name="電話" autocomplete="tel">
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="cfSubject">主旨 <span class="req">*</span></label>
+        <input class="cf-input" type="text" id="cfSubject" name="主旨" required>
+      </div>
+      <div class="cf-row">
+        <label class="cf-label" for="cfMessage">訊息內容 <span class="req">*</span></label>
+        <textarea class="cf-input cf-textarea" id="cfMessage" name="訊息內容" rows="5" required></textarea>
+      </div>
+      <div class="cf-actions">
+        <button type="submit" class="cf-submit" id="cfSubmit">傳送訊息 · Send</button>
+      </div>
+      <div class="cf-feedback" id="cfFeedback" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
 
 <!-- ============ LIGHTBOX ============ -->
 <div class="lightbox" id="lightbox">
@@ -457,6 +528,89 @@ by your own hand</h2>
     mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
   }
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') setMenu(false); });
+})();
+
+/* ── Contact Form Modal ───────────────────────────────────── */
+(function(){
+  var overlay = document.getElementById('cfOverlay');
+  var closeBtn = document.getElementById('cfClose');
+  var form = document.getElementById('cfForm');
+  var subjectInput = document.getElementById('cfSubject');
+  var hiddenSubject = document.getElementById('cfSubjectHidden');
+  var feedback = document.getElementById('cfFeedback');
+  var submitBtn = document.getElementById('cfSubmit');
+
+  function openModal(preset){
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    if(preset){
+      subjectInput.value=preset;
+      hiddenSubject.value='清心網球協會 - '+preset;
+    } else {
+      subjectInput.value='';
+      hiddenSubject.value='清心網球協會 聯絡表單';
+    }
+    feedback.textContent='';
+    feedback.className='cf-feedback';
+    submitBtn.disabled=false;
+    submitBtn.textContent='傳送訊息 · Send';
+    setTimeout(function(){ document.getElementById('cfName').focus(); }, 80);
+  }
+
+  function closeModal(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+
+  window.openContactForm = openModal;
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && overlay.classList.contains('open')) closeModal(); });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('cfName').value.trim();
+    var email = document.getElementById('cfEmail').value.trim();
+    var subject = subjectInput.value.trim();
+    var message = document.getElementById('cfMessage').value.trim();
+    if(!name || !email || !subject || !message){
+      feedback.textContent='請填寫所有必填欄位。';
+      feedback.className='cf-feedback err';
+      return;
+    }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      feedback.textContent='Email 格式不正確，請再確認。';
+      feedback.className='cf-feedback err';
+      return;
+    }
+    submitBtn.disabled=true;
+    submitBtn.textContent='傳送中…';
+    feedback.textContent='';
+    feedback.className='cf-feedback';
+    hiddenSubject.value='清心網球協會 - '+subject;
+    var data=new FormData(form);
+    fetch('https://formsubmit.co/ajax/chingxing666@gmail.com',{
+      method:'POST', body:data, headers:{'Accept':'application/json'}
+    }).then(function(r){ return r.json(); })
+    .then(function(json){
+      if(json.success==='true'||json.success===true){
+        feedback.textContent='訊息已送出，感謝您的聯絡！我們將盡快回覆。';
+        feedback.className='cf-feedback ok';
+        form.reset();
+        submitBtn.disabled=false;
+        submitBtn.textContent='傳送訊息 · Send';
+        setTimeout(closeModal,3500);
+      } else { throw new Error('fail'); }
+    }).catch(function(){
+      feedback.textContent='送出時發生問題，請稍後再試，或直接 Email：chingxing666@gmail.com';
+      feedback.className='cf-feedback err';
+      submitBtn.disabled=false;
+      submitBtn.textContent='傳送訊息 · Send';
+    });
+  });
 })();
 </script>
 
