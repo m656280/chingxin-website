@@ -347,30 +347,31 @@ by your own hand</h2>
     <button class="cf-close" id="cfClose" aria-label="關閉">✕</button>
     <div class="cf-eyebrow-sm">聯絡我們 · Get in touch</div>
     <h3 class="cf-title" id="cfModalTitle">Send us a message</h3>
-    <form id="cfForm" class="cf-form" novalidate>
-      <input type="hidden" name="_subject" id="cfSubjectHidden" value="清心網球協會 聯絡表單">
+    <form id="cfForm" class="cf-form" action="https://formsubmit.co/chingxin666@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="清心網球網站聯絡表單">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://chingxin-website.vercel.app/#ch-contact">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="cf-row">
         <label class="cf-label" for="cfName">姓名 <span class="req">*</span></label>
-        <input class="cf-input" type="text" id="cfName" name="姓名" required autocomplete="name">
+        <input class="cf-input" type="text" id="cfName" name="name" required autocomplete="name">
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfEmail">Email <span class="req">*</span></label>
-        <input class="cf-input" type="email" id="cfEmail" name="Email" required autocomplete="email">
+        <input class="cf-input" type="email" id="cfEmail" name="email" required autocomplete="email">
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfPhone">電話 <span class="opt">選填</span></label>
-        <input class="cf-input" type="tel" id="cfPhone" name="電話" autocomplete="tel">
+        <input class="cf-input" type="tel" id="cfPhone" name="phone" autocomplete="tel">
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfSubject">主旨 <span class="req">*</span></label>
-        <input class="cf-input" type="text" id="cfSubject" name="主旨" required>
+        <input class="cf-input" type="text" id="cfSubject" name="subject" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfMessage">訊息內容 <span class="req">*</span></label>
-        <textarea class="cf-input cf-textarea" id="cfMessage" name="訊息內容" rows="5" required></textarea>
+        <textarea class="cf-input cf-textarea" id="cfMessage" name="message" rows="5" required></textarea>
       </div>
       <div class="cf-actions">
         <button type="submit" class="cf-submit" id="cfSubmit">傳送訊息 · Send</button>
@@ -536,25 +537,15 @@ by your own hand</h2>
   var closeBtn = document.getElementById('cfClose');
   var form = document.getElementById('cfForm');
   var subjectInput = document.getElementById('cfSubject');
-  var hiddenSubject = document.getElementById('cfSubjectHidden');
   var feedback = document.getElementById('cfFeedback');
-  var submitBtn = document.getElementById('cfSubmit');
 
   function openModal(preset){
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
-    if(preset){
-      subjectInput.value=preset;
-      hiddenSubject.value='清心網球協會 - '+preset;
-    } else {
-      subjectInput.value='';
-      hiddenSubject.value='清心網球協會 聯絡表單';
-    }
+    subjectInput.value = preset || '';
     feedback.textContent='';
     feedback.className='cf-feedback';
-    submitBtn.disabled=false;
-    submitBtn.textContent='傳送訊息 · Send';
     setTimeout(function(){ document.getElementById('cfName').focus(); }, 80);
   }
 
@@ -570,46 +561,26 @@ by your own hand</h2>
   overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && overlay.classList.contains('open')) closeModal(); });
 
+  /* 前端驗證 — 通過後讓原生 form POST 正常送出 */
   form.addEventListener('submit', function(e){
-    e.preventDefault();
     var name = document.getElementById('cfName').value.trim();
     var email = document.getElementById('cfEmail').value.trim();
     var subject = subjectInput.value.trim();
     var message = document.getElementById('cfMessage').value.trim();
     if(!name || !email || !subject || !message){
+      e.preventDefault();
       feedback.textContent='請填寫所有必填欄位。';
       feedback.className='cf-feedback err';
       return;
     }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      e.preventDefault();
       feedback.textContent='Email 格式不正確，請再確認。';
       feedback.className='cf-feedback err';
       return;
     }
-    submitBtn.disabled=true;
-    submitBtn.textContent='傳送中…';
-    feedback.textContent='';
-    feedback.className='cf-feedback';
-    hiddenSubject.value='清心網球協會 - '+subject;
-    var data=new FormData(form);
-    fetch('https://formsubmit.co/ajax/chingxin666@gmail.com',{
-      method:'POST', body:data, headers:{'Accept':'application/json'}
-    }).then(function(r){ return r.json(); })
-    .then(function(json){
-      if(json.success==='true'||json.success===true){
-        feedback.textContent='訊息已送出，感謝您的聯絡！我們將盡快回覆。';
-        feedback.className='cf-feedback ok';
-        form.reset();
-        submitBtn.disabled=false;
-        submitBtn.textContent='傳送訊息 · Send';
-        setTimeout(closeModal,3500);
-      } else { throw new Error('fail'); }
-    }).catch(function(){
-      feedback.textContent='送出時發生問題，請稍後再試，或直接 Email：chingxin666@gmail.com';
-      feedback.className='cf-feedback err';
-      submitBtn.disabled=false;
-      submitBtn.textContent='傳送訊息 · Send';
-    });
+    /* 驗證通過 — 不呼叫 preventDefault()，讓 form 正常 POST 至 FormSubmit */
+    document.body.style.overflow='';
   });
 })();
 </script>
