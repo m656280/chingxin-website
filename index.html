@@ -372,12 +372,8 @@ by your own hand</h2>
     <button class="cf-close" id="cfClose" aria-label="關閉">✕</button>
     <div class="cf-eyebrow-sm">聯絡我們 · Get in touch</div>
     <h3 class="cf-title" id="cfModalTitle">Send us a message</h3>
-    <form id="cfForm" class="cf-form" action="https://formsubmit.co/chingxin666@gmail.com" method="POST">
-      <input type="hidden" name="_subject" value="清心網球網站聯絡表單">
+    <form class="cf-form" action="https://formsubmit.co/chingxin666@gmail.com" method="POST">
       <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_next" value="https://chingxin-website.vercel.app/?sent=1">
-      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="cf-row">
         <label class="cf-label" for="cfName">姓名 <span class="req">*</span></label>
         <input class="cf-input" type="text" id="cfName" name="name" required autocomplete="name">
@@ -399,17 +395,9 @@ by your own hand</h2>
         <textarea class="cf-input cf-textarea" id="cfMessage" name="message" rows="5" required></textarea>
       </div>
       <div class="cf-actions">
-        <button type="submit" class="cf-submit" id="cfSubmit">傳送訊息 · Send</button>
+        <button type="submit" class="cf-submit">傳送訊息 · Send</button>
       </div>
-      <div class="cf-feedback" id="cfFeedback" aria-live="polite"></div>
     </form>
-    <div class="cf-thanks" id="cfThanks">
-      <div class="cf-thanks-check">✓</div>
-      <p class="cf-thanks-main">感謝您的詢問。<br>我們已收到您的訊息，<br>請耐心等候回信。</p>
-      <p class="cf-thanks-body">若遲遲未收到回覆，<br>也歡迎親自到球場現場諮詢。</p>
-      <p class="cf-thanks-en">Thank you for reaching out. We have received your message and will reply as soon as possible.</p>
-      <button class="cf-thanks-close" id="cfThanksClose">返回網站 · Close</button>
-    </div>
   </div>
 </div>
 
@@ -577,75 +565,26 @@ by your own hand</h2>
 /* ── Contact Form Modal ───────────────────────────────────── */
 (function(){
   var overlay = document.getElementById('cfOverlay');
-  var modal = overlay.querySelector('.cf-modal');
   var closeBtn = document.getElementById('cfClose');
-  var thanksCloseBtn = document.getElementById('cfThanksClose');
-  var form = document.getElementById('cfForm');
-  var subjectInput = document.getElementById('cfSubject');
-  var feedback = document.getElementById('cfFeedback');
 
-  function openModal(preset){
-    modal.classList.remove('is-thanks');
+  function openModal(){
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
-    subjectInput.value = preset || '';
-    feedback.textContent='';
-    feedback.className='cf-feedback';
     setTimeout(function(){ document.getElementById('cfName').focus(); }, 80);
-  }
-
-  function showThanks(){
-    modal.classList.add('is-thanks');
-    overlay.classList.add('open');
-    overlay.setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-    /* 清除 URL 的 ?sent=1，不影響畫面 */
-    if(window.history && window.history.replaceState){
-      history.replaceState(null,'',window.location.pathname);
-    }
   }
 
   function closeModal(){
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
-    modal.classList.remove('is-thanks');
   }
 
   window.openContactForm = openModal;
 
   closeBtn.addEventListener('click', closeModal);
-  if(thanksCloseBtn) thanksCloseBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && overlay.classList.contains('open')) closeModal(); });
-
-  /* 前端驗證 — 通過後讓原生 form POST 正常送出 */
-  form.addEventListener('submit', function(e){
-    var name = document.getElementById('cfName').value.trim();
-    var email = document.getElementById('cfEmail').value.trim();
-    var subject = subjectInput.value.trim();
-    var message = document.getElementById('cfMessage').value.trim();
-    if(!name || !email || !subject || !message){
-      e.preventDefault();
-      feedback.textContent='請填寫所有必填欄位。';
-      feedback.className='cf-feedback err';
-      return;
-    }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      e.preventDefault();
-      feedback.textContent='Email 格式不正確，請再確認。';
-      feedback.className='cf-feedback err';
-      return;
-    }
-    /* 驗證通過 — 讓 form 正常 POST 至 FormSubmit */
-    document.body.style.overflow='';
-  });
-
-  /* 偵測 FormSubmit 成功後的 redirect ?sent=1 */
-  if(window.location.search.indexOf('sent=1') !== -1){
-    showThanks();
-  }
 })();
 
 /* ── Membership Info Modal ────────────────────────────────── */
