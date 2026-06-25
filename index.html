@@ -299,7 +299,7 @@ by your own hand</h2>
           <li><span class="li-cn">由會員邀請參加</span><span class="li-en">Invited by a member</span></li>
           <li><span class="li-cn">認識清心的開始</span><span class="li-en">A first visit to Ching Xin</span></li>
         </ul>
-        <button class="mc-btn" type="button" onclick="openContactForm('體驗臨打詢問','體驗臨打詢問')">來訪 · Say hello</button>
+        <button class="mc-btn" type="button" onclick="openContactForm('體驗臨打詢問')">來訪 · Say hello</button>
       </div>
       <div class="mem-card feature">
         <div class="mc-cn">年費會員</div>
@@ -323,7 +323,7 @@ by your own hand</h2>
           <li><span class="li-cn">無長期綁約</span><span class="li-en">No long commitment</span></li>
           <li><span class="li-cn">生活忙碌可暫停</span><span class="li-en">Pause whenever life does</span></li>
         </ul>
-        <button class="mc-btn" type="button" onclick="openContactForm('月費會員詢問','月費會員詢問')">詢問 · Enquire</button>
+        <button class="mc-btn" type="button" onclick="openContactForm('月費會員詢問')">詢問 · Enquire</button>
       </div>
     </div>
     <p class="mem-note-dark" style="margin: 15px 0px 1px">實 際 制 度 依 清 心 網 球 公 告 為 準 · Membership details follow Ching Xin's official announcements.</p>
@@ -339,7 +339,7 @@ by your own hand</h2>
         <h2 style="margin-top:0;">Come and <em>play</em>.</h2>
         <div class="contact__cn">來 打 球 。</div>
         <p class="contact__lead">歡迎先到球場走走<br>在現場與我們約球</p>
-        <button class="contact-msg-btn" type="button" onclick="openContactForm('一般聯絡','一般聯絡詢問')">Send Message <span class="ar">→</span></button>
+        <button class="contact-msg-btn" type="button" onclick="openContactForm('一般聯絡')">Send Message <span class="ar">→</span></button>
       </div>
       <div class="contact__details reveal">
         <div class="cdetail" style="padding: 8px 0px 0px"><div class="k">球場位置 · Location</div><div class="v">高雄市橋頭區仕隆路62之1號</div><div class="sub">仕隆活動中心後方 · Behind Shilong Activity Center</div></div>
@@ -373,15 +373,14 @@ by your own hand</h2>
     <div class="cf-eyebrow-sm">聯絡我們 · Get in touch</div>
     <h3 class="cf-title" id="cfModalTitle">Send us a message</h3>
     <form id="cfForm" class="cf-form" action="https://formsubmit.co/chingxin666@gmail.com" method="POST">
-      <input type="hidden" name="_subject" value="【清心網球協會】新聯絡表單">
+      <input type="hidden" name="_subject" value="清心網球網站聯絡表單">
       <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="text">
+      <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://chingxin-website.vercel.app/?sent=1">
-      <input type="hidden" name="送出時間" id="cfDateTime">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="cf-row">
         <label class="cf-label" for="cfName">姓名 <span class="req">*</span></label>
-        <input class="cf-input" type="text" id="cfName" name="姓名" required autocomplete="name">
+        <input class="cf-input" type="text" id="cfName" name="name" required autocomplete="name">
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfEmail">Email <span class="req">*</span></label>
@@ -389,15 +388,15 @@ by your own hand</h2>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfPhone">電話 <span class="opt">選填</span></label>
-        <input class="cf-input" type="tel" id="cfPhone" name="電話" autocomplete="tel">
+        <input class="cf-input" type="tel" id="cfPhone" name="phone" autocomplete="tel">
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfSubject">主旨 <span class="req">*</span></label>
-        <input class="cf-input" type="text" id="cfSubject" name="申請類別" required>
+        <input class="cf-input" type="text" id="cfSubject" name="subject" required>
       </div>
       <div class="cf-row">
         <label class="cf-label" for="cfMessage">訊息內容 <span class="req">*</span></label>
-        <textarea class="cf-input cf-textarea" id="cfMessage" name="內容" rows="5" required></textarea>
+        <textarea class="cf-input cf-textarea" id="cfMessage" name="message" rows="5" required></textarea>
       </div>
       <div class="cf-actions">
         <button type="submit" class="cf-submit" id="cfSubmit">傳送訊息 · Send</button>
@@ -421,7 +420,7 @@ by your own hand</h2>
     <div class="mi-eyebrow">會員制度 · Membership</div>
     <h3 class="mi-title" id="miModalTitle">目前暫停開放<br>線上會員申請</h3>
     <p class="mi-body">感謝您對清心網球協會的關注。<br><br>為維護球場環境、會員品質及良好的球友交流氛圍，目前協會優先接受現有會員推薦之球友，因此暫停開放線上會員申請。<br><br>若您希望進一步了解清心網球協會，歡迎於球場營業時間親自到球場參觀與交流，我們很樂意向您介紹球場環境、協會理念及會員制度。<br><br>感謝您的理解與支持，期待未來有機會與您相見。</p>
-    <button class="mi-confirm" id="miConfirm">我知道了</button>
+    <button class="mi-confirm" id="miConfirm" type="button">我知道了</button>
   </div>
 </div>
 
@@ -585,15 +584,12 @@ by your own hand</h2>
   var subjectInput = document.getElementById('cfSubject');
   var feedback = document.getElementById('cfFeedback');
 
-  function openModal(preset, emailSubject){
+  function openModal(preset){
     modal.classList.remove('is-thanks');
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
     subjectInput.value = preset || '';
-    /* 動態更新 FormSubmit 信件主旨 */
-    var subjHidden = document.querySelector('input[name="_subject"]');
-    if(subjHidden) subjHidden.value = emailSubject || preset || '【清心網球協會】聯絡詢問';
     feedback.textContent='';
     feedback.className='cf-feedback';
     setTimeout(function(){ document.getElementById('cfName').focus(); }, 80);
@@ -626,9 +622,6 @@ by your own hand</h2>
 
   /* 前端驗證 — 通過後讓原生 form POST 正常送出 */
   form.addEventListener('submit', function(e){
-    /* 填入送出時間 */
-    var dt = document.getElementById('cfDateTime');
-    if(dt) dt.value = new Date().toLocaleString('zh-TW', {timeZone:'Asia/Taipei', hour12:false});
     var name = document.getElementById('cfName').value.trim();
     var email = document.getElementById('cfEmail').value.trim();
     var subject = subjectInput.value.trim();
