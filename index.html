@@ -558,6 +558,7 @@ by your own hand</h2>
   var form = document.getElementById('cfForm');
   var subjectInput = document.getElementById('cfSubject');
   var feedback = document.getElementById('cfFeedback');
+  var AJAX_ENDPOINT = 'https://formsubmit.co/ajax/chingxin666@gmail.com';
 
   function openModal(preset){
     modal.classList.remove('is-thanks');
@@ -575,8 +576,8 @@ by your own hand</h2>
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
-    /* 清除 URL 的 ?sent=1，不影響畫面 */
-    if(window.history && window.history.replaceState){
+    /* 清除 URL 的 ?sent=1（若有），不影響畫面 */
+    if(window.history && window.history.replaceState && window.location.search.indexOf('sent=1') !== -1){
       history.replaceState(null,'',window.location.pathname);
     }
   }
@@ -595,8 +596,9 @@ by your own hand</h2>
   overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && overlay.classList.contains('open')) closeModal(); });
 
-  /* 前端驗證 — 通過後讓原生 form POST 正常送出 */
+  /* 前端驗證 + AJAX 送出 — 成功後站內切換 Thank-you，不離開頁面 */
   form.addEventListener('submit', function(e){
+    e.preventDefault();
     /* 填入送出時間 */
     var dt = document.getElementById('cfDateTime');
     if(dt) dt.value = new Date().toLocaleString('zh-TW', {timeZone:'Asia/Taipei', hour12:false});
@@ -605,22 +607,45 @@ by your own hand</h2>
     var subject = subjectInput.value.trim();
     var message = document.getElementById('cfMessage').value.trim();
     if(!name || !email || !subject || !message){
-      e.preventDefault();
       feedback.textContent='請填寫所有必填欄位。';
       feedback.className='cf-feedback err';
       return;
     }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      e.preventDefault();
       feedback.textContent='Email 格式不正確，請再確認。';
       feedback.className='cf-feedback err';
       return;
     }
-    /* 驗證通過 — 讓 form 正常 POST 至 FormSubmit */
-    document.body.style.overflow='';
+    var submitBtn = document.getElementById('cfSubmit');
+    if(submitBtn) submitBtn.disabled = true;
+    feedback.textContent='傳送中…';
+    feedback.className='cf-feedback';
+    fetch(AJAX_ENDPOINT, {
+      method:'POST',
+      headers:{'Accept':'application/json'},
+      body: new FormData(form)
+    })
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(data){
+      if(data && (data.success === 'true' || data.success === true)){
+        if(submitBtn) submitBtn.disabled = false;
+        feedback.textContent='';
+        feedback.className='cf-feedback';
+        form.reset();
+        showThanks();
+      } else {
+        throw new Error('FormSubmit responded without success');
+      }
+    })
+    .catch(function(){
+      /* 失敗 — 顯示錯誤並保留使用者已填資料，不清空表單 */
+      if(submitBtn) submitBtn.disabled = false;
+      feedback.textContent='送出失敗，請稍後再試，或直接到球場現場洽詢。';
+      feedback.className='cf-feedback err';
+    });
   });
 
-  /* 偵測 FormSubmit 成功後的 redirect ?sent=1 */
+  /* 後備：若曾以原生 POST + _next 導回（?sent=1），仍顯示 Thank-you */
   if(window.location.search.indexOf('sent=1') !== -1){
     showThanks();
   }
