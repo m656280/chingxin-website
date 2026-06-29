@@ -64,7 +64,7 @@
 .cf-thanks-close{background:var(--eye-cocoa,#2A211A);color:var(--eye-bone,#FBF7EE);border:none;padding:14px 36px;font-family:var(--font-sans,sans-serif);font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;cursor:pointer;transition:opacity .18s}
 .cf-thanks-close:hover{opacity:.82}
 /* ============================================================
-   MEMBERSHIP NOTICE MODAL (年費會員暫停告知)
+   MEMBERSHIP NOTICE MODAL (暫停招募公告)
    ============================================================ */
 .mi-overlay{position:fixed;inset:0;background:rgba(42,33,26,.82);z-index:9100;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .28s cubic-bezier(0.32,.08,.24,1),visibility .28s cubic-bezier(0.32,.08,.24,1)}
 .mi-overlay.open{opacity:1;visibility:visible}
@@ -74,7 +74,9 @@
 .mi-close:hover{color:var(--eye-cocoa,#2A211A)}
 .mi-eyebrow{font-family:var(--font-sans,sans-serif);font-size:11px;font-weight:500;letter-spacing:.36em;text-transform:uppercase;color:var(--eye-walnut,#5A4D40);margin-bottom:12px}
 .mi-title{font-family:var(--font-display,'Cormorant Garamond',serif);font-size:26px;font-weight:400;color:var(--eye-cocoa,#2A211A);margin:0 0 24px;letter-spacing:-.01em;line-height:1.3}
-.mi-body{font-family:var(--font-sans,sans-serif);font-size:15px;line-height:1.85;color:var(--eye-charcoal,#3D352D);margin:0 0 32px}
+.mi-body{font-family:var(--font-sans,sans-serif);font-size:15px;line-height:1.85;color:var(--eye-charcoal,#3D352D);margin:0 0 18px}
+.mi-list{margin:0 0 18px;padding-left:1.25em;font-family:var(--font-sans,sans-serif);font-size:15px;line-height:1.9;color:var(--eye-charcoal,#3D352D)}
+.mi-list li{margin:2px 0}
 .mi-confirm{background:var(--eye-cocoa,#2A211A);color:var(--eye-bone,#FBF7EE);border:none;padding:14px 36px;font-family:var(--font-sans,sans-serif);font-size:12px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;cursor:pointer;transition:opacity .18s}
 .mi-confirm:hover{opacity:.82}
 @media(max-width:600px){.mi-modal{padding:40px 24px 36px}.mi-title{font-size:22px}}
@@ -299,7 +301,7 @@ by your own hand</h2>
           <li><span class="li-cn">由會員邀請參加</span><span class="li-en">Invited by a member</span></li>
           <li><span class="li-cn">認識清心的開始</span><span class="li-en">A first visit to Ching Xin</span></li>
         </ul>
-        <button class="mc-btn" type="button" onclick="openContactForm('訪客體驗')">來訪 · Say hello</button>
+        <button class="mc-btn" type="button" onclick="openMembershipNotice()">來訪 · Say hello</button>
       </div>
       <div class="mem-card feature">
         <div class="mc-cn">年費會員</div>
@@ -323,7 +325,7 @@ by your own hand</h2>
           <li><span class="li-cn">無長期綁約</span><span class="li-en">No long commitment</span></li>
           <li><span class="li-cn">生活忙碌可暫停</span><span class="li-en">Pause whenever life does</span></li>
         </ul>
-        <button class="mc-btn" type="button" onclick="openContactForm('月費會員詢問')">詢問 · Enquire</button>
+        <button class="mc-btn" type="button" onclick="openMembershipNotice()">詢問 · Enquire</button>
       </div>
     </div>
     <p class="mem-note-dark" style="margin: 15px 0px 1px">實 際 制 度 依 清 心 網 球 公 告 為 準 · Membership details follow Ching Xin's official announcements.</p>
@@ -414,13 +416,19 @@ by your own hand</h2>
   </div>
 </div>
 
-<!-- ============ MEMBERSHIP NOTICE MODAL (年費會員暫停告知) ============ -->
+<!-- ============ MEMBERSHIP NOTICE MODAL (暫停招募公告) ============ -->
 <div class="mi-overlay" id="miOverlay" aria-hidden="true">
   <div class="mi-modal" role="dialog" aria-modal="true" aria-labelledby="miModalTitle">
     <button class="mi-close" id="miClose" aria-label="關閉">✕</button>
-    <div class="mi-eyebrow">會員制度 · Membership</div>
-    <h3 class="mi-title" id="miModalTitle">目前暫停年費會員申請</h3>
-    <p class="mi-body">感謝您對清心網球協會的關注。<br><br>為維護球場環境、會員品質及良好的球友交流氛圍，目前協會優先接受現有會員推薦之球友，因此暫停年費會員申請。<br><br>若您希望進一步了解清心網球協會，歡迎於球場營業時間親自到球場交流，我們很樂意向您介紹球場環境、協會理念及會員制度。<br><br>感謝您的理解與支持，期待未來有機會與您相見。</p>
+    <div class="mi-eyebrow">重要公告 · Announcement</div>
+    <h3 class="mi-title" id="miModalTitle">目前暫停所有入會與來訪體驗</h3>
+    <p class="mi-body">親愛的球友您好，<br>感謝您對清心網球協會的支持與喜愛。<br><br>由於目前會員人數已達規劃上限，為維護球場品質、會員權益及良好的打球環境，目前已暫停：</p>
+    <ul class="mi-list">
+      <li>年費會員申請</li>
+      <li>月費會員申請</li>
+      <li>預約制來訪體驗</li>
+    </ul>
+    <p class="mi-body">預計將於 2026 年 12 月底開放 2027 年度會員名額。<br>歡迎屆時再回到清心網球協會網站查看最新公告與開放資訊。<br><br>感謝您的理解與支持，期待未來有機會在球場與您相見！</p>
     <button class="mi-confirm" id="miConfirm" type="button">我知道了</button>
   </div>
 </div>
@@ -642,19 +650,6 @@ by your own hand</h2>
       feedback.className='cf-feedback err';
       return;
     }
-    /* 非阻塞通知清心 LINE Agent — 不影響 FormSubmit 寄信與 Thank-you 畫面。
-       不更動既有 preventDefault / AJAX 流程；keepalive 讓請求在任何情況下送達；失敗一律吞掉。 */
-    try {
-      var cfPhoneEl = document.getElementById('cfPhone');
-      var phone = cfPhoneEl ? cfPhoneEl.value.trim() : '';
-      fetch('https://asia-east1-chingxin-tennis.cloudfunctions.net/lineWebhook/contact', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ name:name, email:email, phone:phone, category:subject, message:message }),
-        keepalive:true,
-        mode:'cors'
-      }).catch(function(){});
-    } catch(_e){ /* 通知失敗不影響表單送出 */ }
     var submitBtn = document.getElementById('cfSubmit');
     if(submitBtn) submitBtn.disabled = true;
     feedback.textContent='傳送中…';
@@ -690,7 +685,7 @@ by your own hand</h2>
   }
 })();
 
-/* ── Membership Notice Modal (年費會員暫停告知) ───────────── */
+/* ── Membership Notice Modal (暫停招募公告) ──────────────── */
 (function(){
   var overlay = document.getElementById('miOverlay');
   if(!overlay) return;
