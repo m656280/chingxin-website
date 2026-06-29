@@ -650,6 +650,19 @@ by your own hand</h2>
       feedback.className='cf-feedback err';
       return;
     }
+    /* 非阻塞通知清心 LINE Agent — 不影響 FormSubmit 寄信與 Thank-you 畫面。
+       不更動既有 preventDefault / AJAX 流程；keepalive 讓請求在任何情況下送達；失敗一律吞掉。 */
+    try {
+      var cfPhoneEl = document.getElementById('cfPhone');
+      var phone = cfPhoneEl ? cfPhoneEl.value.trim() : '';
+      fetch('https://asia-east1-chingxin-tennis.cloudfunctions.net/lineWebhook/contact', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ name:name, email:email, phone:phone, category:subject, message:message }),
+        keepalive:true,
+        mode:'cors'
+      }).catch(function(){});
+    } catch(_e){ /* 通知失敗不影響表單送出 */ }
     var submitBtn = document.getElementById('cfSubmit');
     if(submitBtn) submitBtn.disabled = true;
     feedback.textContent='傳送中…';
